@@ -1,19 +1,27 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Images/Background.png" type="Texture" id=1]
-[ext_resource path="res://ring.tscn" type="PackedScene" id=2]
-[ext_resource path="res://turtle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://Ring.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Images/Background.png" type="Texture" id=3]
+[ext_resource path="res://turtle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI.tscn" type="PackedScene" id=5]
 
-[node name="Node2D" type="Node2D"]
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+Ring = ExtResource( 2 )
 
 [node name="Background" type="Sprite" parent="."]
-position = Vector2( 512.192, 299.805 )
+position = Vector2( 510.192, 300.805 )
 scale = Vector2( 0.256045, 0.266205 )
-texture = ExtResource( 1 )
+texture = ExtResource( 3 )
 
-[node name="Ring" parent="." instance=ExtResource( 2 )]
-position = Vector2( 462.641, 521.097 )
-
-[node name="Turtle" parent="." instance=ExtResource( 3 )]
+[node name="Turtle" parent="." instance=ExtResource( 4 )]
 position = Vector2( 577.883, 121.923 )
 
+[node name="Ring" parent="." instance=ExtResource( 2 )]
+position = Vector2( 500, 525 )
+
+[node name="GUI" parent="." instance=ExtResource( 5 )]
+
+[connection signal="hit" from="Ring" to="." method="_on_Ring_hit"]
+[connection signal="hit" from="Ring" to="GUI" method="_on_Ring_hit"]
