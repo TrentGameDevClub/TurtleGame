@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Ring.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Images/Background.png" type="Texture" id=3]
 [ext_resource path="res://turtle.tscn" type="PackedScene" id=4]
 [ext_resource path="res://GUI.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 499.418 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -18,10 +21,37 @@ texture = ExtResource( 3 )
 [node name="Turtle" parent="." instance=ExtResource( 4 )]
 position = Vector2( 577.883, 121.923 )
 
-[node name="Ring" parent="." instance=ExtResource( 2 )]
-position = Vector2( 500, 525 )
-
 [node name="GUI" parent="." instance=ExtResource( 5 )]
 
-[connection signal="hit" from="Ring" to="." method="_on_Ring_hit"]
-[connection signal="hit" from="Ring" to="GUI" method="_on_Ring_hit"]
+[node name="Wall1" type="RigidBody2D" parent="."]
+position = Vector2( -19, 0 )
+mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall1"]
+position = Vector2( 1.40027, 298.3 )
+shape = SubResource( 1 )
+
+[node name="Wall2" type="RigidBody2D" parent="."]
+position = Vector2( 1021, 0 )
+mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+position = Vector2( 16.4003, 298.3 )
+shape = SubResource( 1 )
+
+[node name="Wall3" type="RigidBody2D" parent="."]
+position = Vector2( 1141, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+position = Vector2( -620.175, 611.827 )
+rotation = -1.57079
+shape = SubResource( 1 )
+
+[node name="Wall4" type="RigidBody2D" parent="."]
+position = Vector2( 1172, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
+position = Vector2( -663.6, -101.5 )
+rotation = -1.57079
+shape = SubResource( 1 )
+
