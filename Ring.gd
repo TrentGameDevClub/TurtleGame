@@ -1,15 +1,14 @@
 extends RigidBody2D
 
-var active = false
-var locked = false
 var shot = false
-onready var sprite = get_node("RingSprite")
+onready var sprite = get_node("./Sprite")
 export var intensity = 500
 signal hit
 signal oob
 export var force = Vector2()
 export var wind = Vector2(200, 0)
-
+var angular = 10
+var x = 0.1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,18 +17,12 @@ func _ready():
 # Every frame
 func _process(delta):
 	# inputs
-	var lock = Input.is_action_just_pressed("space")
-	var shoot = Input.is_action_just_pressed("backspace")
-	var increase = Input.is_action_pressed("scroll_up")
-	var decrease = Input.is_action_pressed("scroll_down")
+	var shoot = Input.is_action_just_pressed("space") 
 	
 	# look at mouse when space hasn't been pressed, lets you unlock by hitting space again, backspace shoots it
 	var mouse_position = get_viewport().get_mouse_position()
-	if !locked and lock:
-		locked = true
-	elif locked and lock:
-		locked = false
-	if !locked and !shot:
+	
+	if !shot:
 		force = (get_global_mouse_position() - get_node(".").get_position()).normalized() * intensity
 		look_at(get_global_mouse_position())
 	
@@ -40,7 +33,14 @@ func _process(delta):
 		gravity_scale = 1.5
 		print("shoot")
 		shot = true
+	if shot:
+		set_angular_velocity(angular)
+		angular = angular/1.01
 		
+		
+		if(x > 0.05):
+			x = x - 0.0007
+		sprite.set_scale(Vector2(x, x))
 
 # Does physics math
 func _integrate_forces(state):
@@ -56,7 +56,9 @@ func _integrate_forces(state):
 func _on_Ring_body_entered(body):
 	
 	print(body.get_instance_id())
-	var id = 1151
+	var id = get_tree().get_root().get_node("Main/Turtle").get_instance_id()
+	print(id)
+	#var id = 1152
 	if body.get_instance_id() == id:
 		print("hit turtle")
 		emit_signal("hit")

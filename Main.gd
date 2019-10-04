@@ -6,7 +6,7 @@ var ring
 var spawn = Vector2(500,525)
 var score = 0
 var wind
-var intensity = 0
+var intensity = 400
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,14 +16,15 @@ func _ready():
 	_new_Ring()
 
 func _process(delta):
-	$GUI/Numbers/Score.text = str(score)
+	get_node("GUI/HBox/Left/Score").text = str(score)
 	
 	ring.intensity = intensity
-	get_node("GUI/Numbers/Force").text = str(ring.intensity)
-	print(ring.intensity)
+	get_node("GUI/HBox/Left/Force").text = str(ring.intensity)
+	get_node("GUI/HBox/Left/ForceBar").set_value(intensity)
+	
 
 func _input(event):
-	if event.is_action("scroll_up"):
+	if event.is_action("scroll_up") and intensity < 800:
 		intensity += 5
 	elif event.is_action("scroll_down"):
 		intensity -= 5
@@ -48,8 +49,14 @@ func _new_Ring():
 	ring.connect("oob", self, "_on_Ring_oob")
 	
 	wind = rand_range(-1000, 1000)
-	$GUI/Numbers/Wind.text = str(wind)
+	get_node("GUI/HBox/Right/Wind").text = str(wind)
+	
+	if(wind < 0):
+		get_node("GUI/HBox/Right/Sprite").set_flip_h(true)
+	else:
+		get_node("GUI/HBox/Right/Sprite").set_flip_h(false)
 	
 	ring.wind = Vector2(wind, 0)
+	get_node("GUI/HBox/Right/WindBar").set_value(abs(wind))
 	ring.intensity 
 	

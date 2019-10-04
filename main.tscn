@@ -22,6 +22,10 @@ texture = ExtResource( 3 )
 position = Vector2( 577.883, 121.923 )
 
 [node name="GUI" parent="." instance=ExtResource( 5 )]
+margin_left = 12.0
+margin_top = 10.0
+margin_right = 970.0
+margin_bottom = 1121.0
 
 [node name="Wall1" type="RigidBody2D" parent="."]
 position = Vector2( -19, 0 )
@@ -41,6 +45,7 @@ shape = SubResource( 1 )
 
 [node name="Wall3" type="RigidBody2D" parent="."]
 position = Vector2( 1141, 0 )
+mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
 position = Vector2( -620.175, 611.827 )
@@ -49,6 +54,7 @@ shape = SubResource( 1 )
 
 [node name="Wall4" type="RigidBody2D" parent="."]
 position = Vector2( 1172, 0 )
+mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
 position = Vector2( -663.6, -101.5 )
